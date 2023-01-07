@@ -3,6 +3,7 @@ package dispatcherProject;
 import java.io.*;
 import java.util.*;
 
+//Değerler atandı
 
 public class Program {
 
@@ -25,11 +26,161 @@ public class Program {
 	public static boolean calismaDurumu = false;
 	
 	
-	public static void gercekZamanli(){
+	//Gerçek zamanlı kuyruk boş değilse, method prosesi kuyruğa alır,Başladı mı başlamadı mı kontrol eder, başlamadıysa başlatır. Proses başladıysa ve kalan süresi sıfır değilse prosesin yürütülmesine devam eder.Prosesin kalan süresi sıfır ise, yöntem işlemi sonlandırır ve onu sıradan kaldırır.
 
+	public static void gercekZamanli(){
+		aktifProcess = gercekZamanliProcessler.bas();
+		if(!aktifProcess.basladiMi()) {
+			calismaDurumu = true;
+			hazirProcessler.add(aktifProcess);
+			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--; return;
+		}
+		
+		if(aktifProcess.kalanZaman != 0) {
+			aktifProcess.devamEt(sayac); 
+			aktifProcess.kalanZaman--;
+			return;
+		}
+		else {
+			aktifProcess.sonlandir(sayac);
+			hazirProcessler.remove(aktifProcess);
+			gercekZamanliProcessler.pop();
+			aktifProcess = null;
+			calismaDurumu = false;
+			q1 = Q1_QUANTUM;
+			q2 = Q2_QUANTUM;
+			q3 = Q3_QUANTUM;
+			calistir();
+		}
 	}
+
+//Bu metod, üç seviyeli geri beslemeli görevlendirici işlemlerini yürütmekten sorumludur. Önce en yüksek öncelikli sıranın (sıra 1) boş olup olmadığını kontrol eder, başladı mı başlamadı mı kontrol eder, başlamadıysa başlatır. İşlem başladıysa ve kalan süresi sıfır değilse, metod kuyruğa ilişkin kuantum süresinin aşılıp aşılmadığını kontrol eder. Aşılmışsa, metod işlemin önceliğini artırır, daha düşük önceliğe sahip bir sonraki kuyruğa taşır ve bekleme süresini ayarlar. Kuantum süresi aşılmadıysa, metod işlemi yürütmeye devam eder. İşlemin kalan süresi sıfır ise, metod işlemi sonlandırır ve onu sıradan kaldırır. Ardından sıra için kuantum zamanını sıfırlar ve bir sonraki işlemi yürütmeye başlamak için calistir() metodunu çağırır.
+
+En yüksek öncelikli sıra boşsa, metod ikinci öncelikli sırayı (kuyruk 2) benzer şekilde kontrol eder. İkinci öncelik sırası da boşsa, metod üçüncü öncelik sırasını (kuyruk 3) benzer şekilde kontrol eder. Üç kuyruk da boşsa, metod durur.
 	
 	public static void geriBeslemeli() {
+		if (!kullaniciIsProcessleri1.isEmpty()) {
+	            
+	            aktifProcess = kullaniciIsProcessleri1.bas();
+	            
+	            if(!aktifProcess.basladiMi()) {
+	    			calismaDurumu = true;
+	    			hazirProcessler.add(aktifProcess);
+	    			q1 = Q1_QUANTUM;
+	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
+	    			--q1;
+	    			return;
+	    		}
+	    		
+	    		if(aktifProcess.kalanZaman != 0) {
+	    			if(q1-- == 0) {
+	    				aktifProcess.oncelik++;
+	    				processKuyrugaAta(kullaniciIsProcessleri1.pop());
+	    				aktifProcess.bekle(sayac);
+						aktifProcess.askiyaAlinmaZamani = sayac;
+						aktifProcess=null;
+	    				calismaDurumu = false;
+	    				q1 = Q1_QUANTUM;
+	    				calistir();
+	    				return;
+	    			}
+	    			aktifProcess.devamEt(sayac); 
+	    			aktifProcess.kalanZaman--;
+	    			return;
+	    		}
+	    		else {
+	    			aktifProcess.sonlandir(sayac);
+	    			hazirProcessler.remove(aktifProcess);
+	    			kullaniciIsProcessleri1.pop();
+	    			aktifProcess = null;
+	    			calismaDurumu = false;
+    				q1 = Q1_QUANTUM;
+    				calistir();
+    				return;
+	    		}
+	        }
+		  	else if (!kullaniciIsProcessleri2.isEmpty()) {
+	            
+	            aktifProcess = kullaniciIsProcessleri2.bas();
+	            
+	            if(!aktifProcess.basladiMi()) {
+	    			calismaDurumu = true;
+	    			hazirProcessler.add(aktifProcess);
+    				q2 = Q2_QUANTUM;
+	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
+	    			q2--;
+	    			return;
+	    		}
+	    		
+	    		if(aktifProcess.kalanZaman != 0) {
+	    			if(q2-- == 0) {
+	    				aktifProcess.oncelik++;
+	    				processKuyrugaAta(kullaniciIsProcessleri2.pop());
+	    				aktifProcess.bekle(sayac);
+						aktifProcess.askiyaAlinmaZamani = sayac;
+						aktifProcess=null;
+	    				calismaDurumu = false;
+	    				q2 = Q2_QUANTUM;
+	    				calistir();
+	    				return;
+	    			}
+	    			aktifProcess.devamEt(sayac); 
+	    			aktifProcess.kalanZaman--;
+	    			return;
+	    		}
+	    		else {
+	    			aktifProcess.sonlandir(sayac);
+	    			hazirProcessler.remove(aktifProcess);
+	    			kullaniciIsProcessleri2.pop();
+	    			aktifProcess = null;
+	    			calismaDurumu = false;
+    				q2 = Q2_QUANTUM;
+    				calistir();
+    				return;
+	    		}
+
+	        }
+	        else if (!kullaniciIsProcessleri3.isEmpty()) {
+	            
+	            
+	            aktifProcess = kullaniciIsProcessleri3.bas();
+	            
+	            if(!aktifProcess.basladiMi()) {
+	    			calismaDurumu = true;
+	    			hazirProcessler.add(aktifProcess);
+    				q3 = Q3_QUANTUM;
+	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
+	    			q3--;
+	    			return;
+	    		}
+	    		
+	    		if(aktifProcess.kalanZaman != 0) {
+	    			if(q3-- == 0) {
+	    				processKuyrugaAta(kullaniciIsProcessleri3.pop());
+	    				aktifProcess.bekle(sayac);
+						aktifProcess.askiyaAlinmaZamani = sayac;
+						aktifProcess=null;
+	    				calismaDurumu = false;
+	    				q3 = Q3_QUANTUM;
+	    				calistir();
+	    				return;
+	    			}
+	    			aktifProcess.devamEt(sayac); 
+	    			aktifProcess.kalanZaman--;
+	    			return;
+	    		}
+	    		else {
+	    			aktifProcess.sonlandir(sayac);
+	    			hazirProcessler.remove(aktifProcess);
+	    			aktifProcess = null;
+	    			kullaniciIsProcessleri3.pop();
+	    			calismaDurumu = false;
+    				q3 = Q3_QUANTUM;
+    				calistir();
+    				return;
+	    		}
+			}
+	       
 
 	}
 	
