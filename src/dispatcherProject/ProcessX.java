@@ -123,9 +123,7 @@ public class ProcessX {
 		} finally {
             pool.shutdown();
         }
-		/*Program.timer.schedule( new TimerTask() {
-					    public void run() {
-					    	while(true) {System.out.print("Çalýþtým.");}}}, 0);*/
+
 	}
 	
     private static class ProcessReadTask implements Callable<List<String>> {

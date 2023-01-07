@@ -29,7 +29,7 @@ public class Program {
 		aktifProcess = gercekZamanliProcessler.bas();
 		if(!aktifProcess.basladiMi()) {
 			calismaDurumu = true;
-		//	hazirProcessler.add(aktifProcess);
+
 			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--; return;
 		}
 		
@@ -60,7 +60,7 @@ public class Program {
 	            
 	            if(!aktifProcess.basladiMi()) {
 	    			calismaDurumu = true;
-	    	//		hazirProcessler.add(aktifProcess);
+	    			
 	    			q1 = Q1_QUANTUM;
 	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
 	    			--q1;
@@ -100,7 +100,7 @@ public class Program {
 	            
 	            if(!aktifProcess.basladiMi()) {
 	    			calismaDurumu = true;
-	    		//	hazirProcessler.add(aktifProcess);
+	    			
     				q2 = Q2_QUANTUM;
 	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
 	    			q2--;
@@ -142,7 +142,7 @@ public class Program {
 	            
 	            if(!aktifProcess.basladiMi()) {
 	    			calismaDurumu = true;
-	    			//hazirProcessler.add(aktifProcess);
+	    			
     				q3 = Q3_QUANTUM;
 	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
 	    			q3--;
@@ -199,14 +199,14 @@ public class Program {
 	
 	public static void test() {
 			sayac++;
-		//System.out.println(sayac);
+
 		for(int i = 0; i< processler.size();i++) {
 			ProcessX p = processler.get(i);
 			if(p.gelisZamani == sayac) {
 				hazirProcessler.add(p);
 				processKuyrugaAta(p);
 				if(aktifProcess != null && p.oncelik < aktifProcess.oncelik) {
-					//aktifProcess.kalanZaman--;
+
 					if(aktifProcess.kalanZaman==0 ) {
 						aktifProcess.sonlandir(sayac);
 		    			hazirProcessler.remove(aktifProcess);
@@ -248,9 +248,7 @@ public class Program {
 			}
 		}
 
-		//gercekZamanliProcessler.Yazdir();
-		
-		//if(!calismaDurumu)
+
 			calistir();
 
 			for(int i = 0; i < hazirProcessler.size(); i++) {
