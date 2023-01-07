@@ -26,7 +26,7 @@ public class Program {
 	public static boolean calismaDurumu = false;
 	
 	
-	//Gerçek zamanlı kuyruk boş değilse, method prosesi kuyruğa alır,Başladı mı başlamadı mı kontrol eder, başlamadıysa başlatır. Proses başladıysa ve kalan süresi sıfır değilse prosesin yürütülmesine devam eder.Prosesin kalan süresi sıfır ise, yöntem işlemi sonlandırır ve onu sıradan kaldırır.
+	//Gerçek zamanlı kuyruk boş değilse, method prosesi kuyruğa alır,Başladı mı başlamadı mı kontrol eder, başlamadıysa başlatır. Proses başladıysa ve kalan süresi sıfır değilse prosesin yürütülmesine devam eder.Prosesin kalan süresi sıfır ise, metod işlemi sonlandırır ve onu sıradan kaldırır.
 
 	public static void gercekZamanli(){
 		aktifProcess = gercekZamanliProcessler.bas();
