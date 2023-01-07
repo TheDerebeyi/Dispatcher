@@ -306,7 +306,7 @@ public class Program {
 		
 		timer.scheduleAtFixedRate( new TimerTask() {
 		    public void run() {
-		        test();}}, 0, 100);
+		        test();}}, 0, 1000);
 		
 		
 		
