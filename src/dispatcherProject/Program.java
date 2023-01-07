@@ -3,7 +3,6 @@ package dispatcherProject;
 import java.io.*;
 import java.util.*;
 
-//DeÄŸerler atandÄ±
 
 public class Program {
 
@@ -25,14 +24,12 @@ public class Program {
 	public static int sayac = -1;
 	public static boolean calismaDurumu = false;
 	
-	
-	//GerÃ§ek zamanlÄ± kuyruk boÅŸ deÄŸilse, method prosesi kuyruÄŸa alÄ±r,BaÅŸladÄ± mÄ± baÅŸlamadÄ± mÄ± kontrol eder, baÅŸlamadÄ±ysa baÅŸlatÄ±r. Proses baÅŸladÄ±ysa ve kalan sÃ¼resi sÄ±fÄ±r deÄŸilse prosesin yÃ¼rÃ¼tÃ¼lmesine devam eder.Prosesin kalan sÃ¼resi sÄ±fÄ±r ise, metod iÅŸlemi sonlandÄ±rÄ±r ve onu sÄ±radan kaldÄ±rÄ±r.
-
+	//Gerçek zamanlı kuyruk boş değilse, method prosesi kuyruğa alır,Başladı mı başlamadı mı kontrol eder, başlamadıysa başlatır. Proses başladıysa ve kalan süresi sıfır değilse prosesin yürütülmesine devam eder.Prosesin kalan süresi sıfır ise, metod işlemi sonlandırır ve onu sıradan kaldırır.
 	public static void gercekZamanli(){
 		aktifProcess = gercekZamanliProcessler.bas();
 		if(!aktifProcess.basladiMi()) {
 			calismaDurumu = true;
-			hazirProcessler.add(aktifProcess);
+		//	hazirProcessler.add(aktifProcess);
 			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--; return;
 		}
 		
@@ -53,11 +50,9 @@ public class Program {
 			calistir();
 		}
 	}
+	//Bu metod, üç seviyeli geri beslemeli görevlendirici işlemlerini yürütmekten sorumludur. Önce en yüksek öncelikli sıranın (sıra 1) boş olup olmadığını kontrol eder, başladı mı başlamadı mı kontrol eder, başlamadıysa başlatır. İşlem başladıysa ve kalan süresi sıfır değilse, metod kuyruğa ilişkin kuantum süresinin aşılıp aşılmadığını kontrol eder. Aşılmışsa, metod işlemin önceliğini artırır, daha düşük önceliğe sahip bir sonraki kuyruğa taşır ve bekleme süresini ayarlar. Kuantum süresi aşılmadıysa, metod işlemi yürütmeye devam eder. İşlemin kalan süresi sıfır ise, metod işlemi sonlandırır ve onu sıradan kaldırır. Ardından sıra için kuantum zamanını sıfırlar ve bir sonraki işlemi yürütmeye başlamak için calistir() metodunu çağırır.
 
-//Bu metod, Ã¼Ã§ seviyeli geri beslemeli gÃ¶revlendirici iÅŸlemlerini yÃ¼rÃ¼tmekten sorumludur. Ã–nce en yÃ¼ksek Ã¶ncelikli sÄ±ranÄ±n (sÄ±ra 1) boÅŸ olup olmadÄ±ÄŸÄ±nÄ± kontrol eder, baÅŸladÄ± mÄ± baÅŸlamadÄ± mÄ± kontrol eder, baÅŸlamadÄ±ysa baÅŸlatÄ±r. Ä°ÅŸlem baÅŸladÄ±ysa ve kalan sÃ¼resi sÄ±fÄ±r deÄŸilse, metod kuyruÄŸa iliÅŸkin kuantum sÃ¼resinin aÅŸÄ±lÄ±p aÅŸÄ±lmadÄ±ÄŸÄ±nÄ± kontrol eder. AÅŸÄ±lmÄ±ÅŸsa, metod iÅŸlemin Ã¶nceliÄŸini artÄ±rÄ±r, daha dÃ¼ÅŸÃ¼k Ã¶nceliÄŸe sahip bir sonraki kuyruÄŸa taÅŸÄ±r ve bekleme sÃ¼resini ayarlar. Kuantum sÃ¼resi aÅŸÄ±lmadÄ±ysa, metod iÅŸlemi yÃ¼rÃ¼tmeye devam eder. Ä°ÅŸlemin kalan sÃ¼resi sÄ±fÄ±r ise, metod iÅŸlemi sonlandÄ±rÄ±r ve onu sÄ±radan kaldÄ±rÄ±r. ArdÄ±ndan sÄ±ra iÃ§in kuantum zamanÄ±nÄ± sÄ±fÄ±rlar ve bir sonraki iÅŸlemi yÃ¼rÃ¼tmeye baÅŸlamak iÃ§in calistir() metodunu Ã§aÄŸÄ±rÄ±r.
-
-En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) benzer ÅŸekilde kontrol eder. Ä°kinci Ã¶ncelik sÄ±rasÄ± da boÅŸsa, metod Ã¼Ã§Ã¼ncÃ¼ Ã¶ncelik sÄ±rasÄ±nÄ± (kuyruk 3) benzer ÅŸekilde kontrol eder. ÃœÃ§ kuyruk da boÅŸsa, metod durur.
-	
+	//En yüksek öncelikli sıra boşsa, metod ikinci öncelikli sırayı (kuyruk 2) benzer şekilde kontrol eder. İkinci öncelik sırası da boşsa, metod üçüncü öncelik sırasını (kuyruk 3) benzer şekilde kontrol eder. Üç kuyruk da boşsa, metod durur.	
 	public static void geriBeslemeli() {
 		if (!kullaniciIsProcessleri1.isEmpty()) {
 	            
@@ -65,7 +60,7 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 	            
 	            if(!aktifProcess.basladiMi()) {
 	    			calismaDurumu = true;
-	    			hazirProcessler.add(aktifProcess);
+	    	//		hazirProcessler.add(aktifProcess);
 	    			q1 = Q1_QUANTUM;
 	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
 	    			--q1;
@@ -105,7 +100,7 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 	            
 	            if(!aktifProcess.basladiMi()) {
 	    			calismaDurumu = true;
-	    			hazirProcessler.add(aktifProcess);
+	    		//	hazirProcessler.add(aktifProcess);
     				q2 = Q2_QUANTUM;
 	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
 	    			q2--;
@@ -147,7 +142,7 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 	            
 	            if(!aktifProcess.basladiMi()) {
 	    			calismaDurumu = true;
-	    			hazirProcessler.add(aktifProcess);
+	    			//hazirProcessler.add(aktifProcess);
     				q3 = Q3_QUANTUM;
 	    			aktifProcess.baslat(sayac); aktifProcess.kalanZaman--;
 	    			q3--;
@@ -208,7 +203,7 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 		for(int i = 0; i< processler.size();i++) {
 			ProcessX p = processler.get(i);
 			if(p.gelisZamani == sayac) {
-				
+				hazirProcessler.add(p);
 				processKuyrugaAta(p);
 				if(aktifProcess != null && p.oncelik < aktifProcess.oncelik) {
 					//aktifProcess.kalanZaman--;
@@ -260,7 +255,9 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 
 			for(int i = 0; i < hazirProcessler.size(); i++) {
 				ProcessX p = hazirProcessler.get(i);
+
 				if(sayac - p.askiyaAlinmaZamani == TIMEOUT) {
+					i=-1;
 					hazirProcessler.remove(p);
 					switch(p.oncelik) {
 					case 0:
@@ -296,7 +293,7 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 	    	String s = formatter.format("%d.0000 sn", sayac).toString();
 	    	formatter.close();
 	    	formatter = new Formatter();
-	    	String s2 = formatter.format("%-10s sistem boï¿½ta", s).toString();
+	    	String s2 = formatter.format("%-10s sistem boşta", s).toString();
 			System.out.format("\u001B[31m" + "%-30s\n", s2);
 			formatter.close();
 			return;
@@ -307,7 +304,7 @@ En yÃ¼ksek Ã¶ncelikli sÄ±ra boÅŸsa, metod ikinci Ã¶ncelikli sÄ±rayÄ± (kuyruk 2) 
 	
 	public static void main(String[] args) {
 		
-		processler = ProcessListReader.readProcessList("./src/dispatcherProject/giriï¿½.txt");
+		processler = ProcessListReader.readProcessList("./src/dispatcherProject/giriş.txt");
 		
 		timer.scheduleAtFixedRate( new TimerTask() {
 		    public void run() {

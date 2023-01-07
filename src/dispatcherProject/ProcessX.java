@@ -27,7 +27,7 @@ public class ProcessX {
 	public int renk; //0-6
 	public int askiyaAlinmaZamani;
 	ProcessBuilder pb;
-//Proses constructurý oluþturuldu.
+//Process constructor	
 	ProcessX(int _gelisZamani, int _oncelik, int _zaman){
 		id = idCounter++;
 		renk = id % 7;
@@ -49,7 +49,7 @@ public class ProcessX {
 
 	}
 	
-//Prosesin baþlayýp baþlamadýðýný kontrol eder	
+//Prosesin baþlayýp baþlamadýðýný kontrol eder.	
 	public boolean basladiMi(){
 		if(zaman == kalanZaman) {
 			return false;
@@ -66,7 +66,7 @@ public class ProcessX {
 		System.out.format(colors.get(renk) + "%-30s(id:%04d  oncelik:%d  kalan süre:%d sn)\n", s2, id,oncelik,kalanZaman);
 		formatter.close();
 	}
-	//Prosesi askýya alýr.
+	//prosesi askýya alýr
 	public void bekle(int sayac) {
 		Formatter formatter = new Formatter();
     	String s = formatter.format("%d.0000 sn", sayac).toString();
@@ -76,7 +76,7 @@ public class ProcessX {
 		System.out.format(colors.get(renk) + "%-30s(id:%04d  oncelik:%d  kalan süre:%d sn)\n", s2, id,oncelik,kalanZaman);
 		formatter.close();
 	}
-	//Prosesi sonlandýrýr
+	//prosesi sonlandýrýr
 	public void sonlandir(int sayac) {
 		Formatter formatter = new Formatter();
     	String s = formatter.format("%d.0000 sn", sayac).toString();
@@ -86,7 +86,7 @@ public class ProcessX {
 		System.out.format(colors.get(renk) +  "%-30s(id:%04d  oncelik:%d  kalan süre:%d sn)\n", s2, id,oncelik,kalanZaman);
 		formatter.close();
 	}
-	//Gerekli deðiþkenler ile yeni bir proses builder oluþturulur.
+	//Gerekli deðiþkenler ile yeni bir proses oluþturur.
 	public void baslat(int sayac) {
 		pb = new ProcessBuilder("java", "-jar", "./Program.jar", Integer.toString(sayac), Integer.toString(id), Integer.toString(oncelik), Integer.toString(zaman));
 		Formatter formatter = new Formatter();
@@ -97,7 +97,7 @@ public class ProcessX {
 		System.out.format(colors.get(renk) + "%-30s(id:%04d  oncelik:%d  kalan süre:%d sn)\n", s2, id,oncelik,kalanZaman);
 		formatter.close();
 	}
-	//Askýda olan prosesin devam etmesini saðlar
+	//askýda olan prosesin devam etmesini saðlar
 	public void devamEt(int sayac){
 		ExecutorService pool = Executors.newSingleThreadExecutor();
 
@@ -106,7 +106,7 @@ public class ProcessX {
 	        	
 	        	pb.command().set(3, Integer.toString(sayac));
 	        	pb.command().set(6, Integer.toString(kalanZaman));
-				//ProcessBuilder.start()
+				
 	        	Process proc = pb.start();
 	        	
 	            ProcessReadTask task = new ProcessReadTask(proc.getInputStream());
@@ -142,6 +142,14 @@ public class ProcessX {
 				.lines()
 				.collect(Collectors.toList());
         }
+    }
+    
+    public void Yazdir() {
+		Formatter formatter = new Formatter();
+    	formatter.close();
+    	formatter = new Formatter();
+		System.out.format(colors.get(renk) + "(id:%04d  oncelik:%d  kalan süre:%d sn  askýya alýnma zamaný:%d sn)\n", id,oncelik,kalanZaman, askiyaAlinmaZamani);
+		formatter.close();
     }
 
 }

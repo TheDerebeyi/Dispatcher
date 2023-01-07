@@ -54,7 +54,7 @@ public class Kuyruk {
 		if(genislik==0) return;
 		Dugum cache = bas;
 		for(int i = 0; i<genislik;i++) {
-			System.out.println(cache.veri.id);
+			cache.veri.Yazdir();
 			cache = cache.sonraki;
 			}
 	}
