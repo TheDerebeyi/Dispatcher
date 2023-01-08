@@ -30,21 +30,23 @@ public class ProcessX {
 //Process constructor	
 	ProcessX(int _gelisZamani, int _oncelik, int _zaman){
 		id = idCounter++;	//idCounter deðeri þu ana kadar oluþturulmuþ proseslerin sayýsýný bize verecek
-		renk = id % 7;		//id mod 7 iþlemi ile proses rengi belirlenir
-		gelisZamani = _gelisZamani;
-		oncelik = _oncelik;
-		zaman = _zaman;	
-		kalanZaman = zaman;
-		askiyaAlinmaZamani = gelisZamani;
-
+		
 		colors = new ArrayList<String>();
 		colors.add(BLUE);
 		colors.add(GREEN);
 		colors.add(PURPLE);
 		colors.add(RED);
 		colors.add(YELLOW);
-		colors.add(BLACK);
 		colors.add(CYAN);
+		
+		renk = id % colors.size();		//id mod renk sayýsý iþlemi ile proses rengi belirlenir
+		gelisZamani = _gelisZamani;
+		oncelik = _oncelik;
+		zaman = _zaman;	
+		kalanZaman = zaman;
+		askiyaAlinmaZamani = gelisZamani;
+
+
 		
 
 	}
