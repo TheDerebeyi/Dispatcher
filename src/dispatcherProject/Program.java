@@ -302,7 +302,7 @@ public class Program {
 	
 	public static void main(String[] args) {
 		
-		processler = ProcessListReader.readProcessList("./src/dispatcherProject/giriþ.txt");
+		processler = ProcessListReader.readProcessList("./giriþ.txt");
 		
 		timer.scheduleAtFixedRate( new TimerTask() {
 		    public void run() {
