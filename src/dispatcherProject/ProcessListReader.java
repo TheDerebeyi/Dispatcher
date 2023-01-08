@@ -4,12 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-//Listeden okuma iþlemi yapmak için oluþturuldu.
+//Dosyadan okuma iþlemi yapmak için oluþturuldu.
 public class ProcessListReader {
 //Girdi dosyasýndan iþlem listesini okur ve ProcessX nesnelerinin bir listesini döndürür
     public static List<ProcessX> readProcessList(String giris) {
         List<List<String>> stringList = new ArrayList<List<String>>();
-//Dosyadan satýr satýr okunup boþluk kontrolü yapýlýp virgülle ayýrýrýz ve ortaya çýkan listeyi saklarýz.
+//Dosyadan satýr satýr okunup deðerler virgüle göre ayrýlýr ve ortaya çýkan listeyi saklanýr
         try (BufferedReader br = new BufferedReader(new FileReader(giris))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -23,7 +23,7 @@ public class ProcessListReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-// Karþýlaþtýrýlan prosesleri idlerine göre sýralar.       
+// Karþýlaþtýrýlan prosesleri geliþ zamanlarýna göre sýralar.       
         stringList.sort(new Comparator<List<String>>() {
 
 			@Override

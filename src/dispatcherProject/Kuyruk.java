@@ -1,29 +1,29 @@
 package dispatcherProject;
 
 public class Kuyruk {
-	private class Dugum {
-		public ProcessX veri;
-		public Dugum sonraki;
+	private class Dugum {		//Kuyruk yapýsý düðümlerden oluþur
+		public ProcessX veri;	//Düðümün tuttuðu proses
+		public Dugum sonraki;	//Sonraki düðüm
 		Dugum(ProcessX processX){
 			veri = processX;
 			sonraki = null;
 		}
 	}
-	private int genislik;
-	private Dugum bas;
-	private Dugum son;
+	private int genislik;	//kuyruk geniþliði
+	private Dugum bas;		//kuyruk baþý
+	private Dugum son;		//kuyruk sonu
 	
 	Kuyruk(){
 		bas = null;
 		genislik = 0;
 	}
 	
-	public ProcessX bas() {
+	public ProcessX bas() {	//baþ düðümü döndürür
 		
 		return (bas.veri != null)?bas.veri:null ;
 	}
 	
-	public ProcessX pop() {
+	public ProcessX pop() {		//baþ düðümü kuyruktan çýkarýr
 		
 		if(genislik == 0) {
 			return null;
@@ -36,7 +36,7 @@ public class Kuyruk {
 		return cache.veri;
 	}
 	
-	public void push(ProcessX processX) {
+	public void push(ProcessX processX) {	//kuyruða yeni düðüm ekler.
 		if(genislik == 0) {
 			bas = new Dugum(processX);
 			son = bas;
@@ -50,7 +50,7 @@ public class Kuyruk {
 		genislik++;
 	}
 	
-	public void Yazdir() {
+	public void Yazdir() {	//kuyruðu yazdýrýr
 		if(genislik==0) return;
 		Dugum cache = bas;
 		for(int i = 0; i<genislik;i++) {
@@ -59,12 +59,12 @@ public class Kuyruk {
 			}
 	}
 	
-	public boolean isEmpty() {
+	public boolean isEmpty() {	//kuyruk boþ mu kontrol edilir
 		if(genislik == 0) {return true;}
 		return false;
 	}
 
-	public boolean remove(ProcessX p) {
+	public boolean remove(ProcessX p) {	//kuyruktan belirli bir p prosesini çýkarýr
 		if(bas == null) return false;
 		if(bas.veri == p) {
 			bas = bas.sonraki;

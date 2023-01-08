@@ -13,24 +13,24 @@ public class ProcessX {
 	public static final String BLUE = "\u001B[34m";
 	public static final String PURPLE = "\u001B[35m";
 	public static final String CYAN = "\u001B[36m";
-//Renk listesi oluþturuldu	
+//Proseslerin konsol uygulamasýnda kullanýcaklarý renkler	
 	List<String> colors;
 	
 
-//Proses özellikleri tanýmlandý	
+//Proses özellikleri
 	public int gelisZamani;
 	public int oncelik;
 	public int zaman;
 	public int kalanZaman;
 	public int id;
-	public static int idCounter;
+	public static int idCounter;//idCounter static olarak tutulan kaç tane prosesin halihazýrda oluþturulduðunu bize gösteren deðiþken
 	public int renk; //0-6
 	public int askiyaAlinmaZamani;
 	ProcessBuilder pb;
 //Process constructor	
 	ProcessX(int _gelisZamani, int _oncelik, int _zaman){
-		id = idCounter++;
-		renk = id % 7;
+		id = idCounter++;	//idCounter deðeri þu ana kadar oluþturulmuþ proseslerin sayýsýný bize verecek
+		renk = id % 7;		//id mod 7 iþlemi ile proses rengi belirlenir
 		gelisZamani = _gelisZamani;
 		oncelik = _oncelik;
 		zaman = _zaman;	
@@ -88,7 +88,11 @@ public class ProcessX {
 	}
 	//Gerekli deðiþkenler ile yeni bir proses oluþturur.
 	public void baslat(int sayac) {
-		pb = new ProcessBuilder("java", "-jar", "./Program.jar", Integer.toString(sayac), Integer.toString(id), Integer.toString(oncelik), Integer.toString(zaman));
+		//Process.jar yürütme iþlemini gerçekleþtiren bizim oluþturduðumuz bir harici program.
+		//aldýðý parametreleri kullanarak ...yürütülüyor... kýsmýný yazdýrmakla görevli.
+		
+		//arg1: saniye, arg2 id, arg3 oncelik, arg4 kalanSure
+		pb = new ProcessBuilder("java", "-jar", "./Process.jar", Integer.toString(sayac), Integer.toString(id), Integer.toString(oncelik), Integer.toString(zaman));
 		Formatter formatter = new Formatter();
     	String s = formatter.format("%d.0000 sn", sayac).toString();
     	formatter.close();
@@ -102,15 +106,15 @@ public class ProcessX {
 		ExecutorService pool = Executors.newSingleThreadExecutor();
 
 	        try {
-	    		//arg1: saniye, arg2 id, arg3 oncelik, arg4 kalanSure
-	        	
+	        	//saniye ve kalan süre deðerleri güncellenir
 	        	pb.command().set(3, Integer.toString(sayac));
 	        	pb.command().set(6, Integer.toString(kalanZaman));
 				
-	        	Process proc = pb.start();
+	        	Process proc = pb.start(); //Proses ...yürütülüyor... kýsmýný bize oluþturacak
 	        	
+	        	//Prosesin döndürdüðü deðerin alýnýp yazdýrýldýðý kýsým. 
 	            ProcessReadTask task = new ProcessReadTask(proc.getInputStream());
-	            Future<List<String>> future = pool.submit(task);
+	            Future<List<String>> future = pool.submit(task);  //prosesten okuma iþlemi için ayrý bir thread kullanýldý
 
 	            List<String> result = future.get(100, TimeUnit.SECONDS);
 	            
@@ -142,7 +146,7 @@ public class ProcessX {
         }
     }
     
-    public void Yazdir() {
+    public void Yazdir() {	//Prosesin özelliklerini yazdýrýr.
 		Formatter formatter = new Formatter();
     	formatter.close();
     	formatter = new Formatter();
